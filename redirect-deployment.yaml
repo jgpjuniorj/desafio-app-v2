@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redirect-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: redirect
+  template:
+    metadata:
+      labels:
+        app: redirect
+    spec:
+      containers:
+      - name: redirect
+        image: redirect:latest
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 5001
+        env:
+        - name: APP_PORT
+          value: "5001"
+        - name: TARGET_SERVICE
+          value: "http://app-service:5000"

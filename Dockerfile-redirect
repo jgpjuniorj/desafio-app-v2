@@ -1,0 +1,11 @@
+# Dockerfile-redirect
+FROM python:3.9-slim
+WORKDIR /app
+RUN apt-get update && apt-get install -y python3-venv
+RUN python3 -m venv venv
+COPY requirements.txt ./
+RUN ./venv/bin/pip install -r requirements.txt
+COPY . .
+COPY start-redirect.sh /app/start-redirect.sh
+RUN chmod +x /app/start-redirect.sh
+CMD ["./start-redirect.sh"]
